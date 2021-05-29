@@ -52,7 +52,7 @@ const getAllOrchids = async (req, res) => {
 const getOrchid = async(req, res, next) => {
     try{
         const id = req.params.orchid_id;
-        const account = await firestore.collection('orhcids').doc(id);
+        const account = await firestore.collection('orchids').doc(id);
         const data = await account.get();
         if (!data.exists){
             res.status(404).send('Orchid with the given ID not found');
