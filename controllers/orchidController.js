@@ -49,8 +49,49 @@ const getAllOrchids = async (req, res) => {
         res.status(400).send(error.message);
     }
 }
+const getOrchid = async(req, res, next) => {
+    try{
+        const id = req.params.orchid_id;
+        const account = await firestore.collection('orhcids').doc(id);
+        const data = await account.get();
+        if (!data.exists){
+            res.status(404).send('Orchid with the given ID not found');
+        }else{
+            res.send(data.data());
+        }
+    }
+    catch(error){
+        res.status(400).send(error.message);
+    }
+}
 
+const updateOrchid = async(req, res, next) => {
+    try{
+        const id = req.params.orchid_id;
+        const data = req.body;
+        const account = await firestore.collection('orchids').doc(id);
+        await account.update(data);
+        res.send('Orchid record updated successfuly');
+    }
+    catch(error){
+        res.status(400).send(error.message);
+    }
+}
+
+const deleteOrchid = async(req, res, next) => {
+    try{
+        const id = req.params.orchid_id;
+        await firestore.collection('orchids').doc(id).delete();
+        res.send('Record deleted successfuly');
+    }
+    catch(error){
+        res.status(400).send(error.message);
+    }
+}
 module.exports = {
     addOrchid,
     getAllOrchids,
+    deleteOrchid,
+    updateOrchid,
+    getOrchid
 }
