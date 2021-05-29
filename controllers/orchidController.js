@@ -4,6 +4,17 @@ const firebase = require('../db');
 const Orchid = require('../models/orchid');
 const firestore = firebase.firestore();
 
+const addOrchid = async(req, res, next) => {
+    try{
+        const data = req.body;
+        await firestore.collection('orchids').doc().set(data);
+        res.send('Record saved successfuly');
+    }
+    catch(error){
+        res.status(400).send(error.message);
+    }
+}
+
 const getAllOrchids = async (req, res) => {
     try{
         const orchids = await firestore.collection('orchids');
@@ -40,5 +51,6 @@ const getAllOrchids = async (req, res) => {
 }
 
 module.exports = {
+    addOrchid,
     getAllOrchids,
 }
