@@ -8,7 +8,8 @@ const addOrchid = async(req, res, next) => {
     try{
         const data = req.body;
         await firestore.collection('orchids').doc().set(data);
-        res.send('Record saved successfully');
+        res.send(req.body);
+       // res.send('Record saved successfully');
     }
     catch(error){
         res.status(400).send(error.message);
@@ -19,13 +20,15 @@ const getAllOrchids = async (req, res) => {
     try{
         const orchids = await firestore.collection('orchids'); 
         const data = await orchids.get();
+        const count = data.size;
         const orchidsArray = [];
         if (data.empty){
             res.status(404).send('No account record found');
         }
         else{
+            console.log(count);
             data.forEach(element => {
-                console.log(element)
+                //console.log(element)
                 const orchid = new Orchid(
                     element.id,
                     element.data().category,

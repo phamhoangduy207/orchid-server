@@ -10,11 +10,15 @@ const feedRoutes = require('./routes/feed-routes');
 const slideRoutes = require('./routes/slide-routes');
 
 const app = express();
-
-app.use(express.json());
+app.use(function(req, res, next) {
+    if (req.headers['content-type'] === 'application/json;') {
+      req.headers['content-type'] = 'application/json';
+    }
+    next();
+  });
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 
 app.use('/api', accountRoutes.routes);
 app.use('/api', userRoutes.routes);
