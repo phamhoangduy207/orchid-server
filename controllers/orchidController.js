@@ -23,7 +23,7 @@ const getAllOrchids = async (req, res) => {
         const count = data.size;
         const orchidsArray = [];
         if (data.empty){
-            res.status(404).send('No account record found');
+            res.status(404).send('No orchid record found');
         }
         else{
             console.log(count);
@@ -91,10 +91,29 @@ const deleteOrchid = async(req, res, next) => {
     }
 }
 
+const getOrchid = async(req, res, next) => {
+    try{
+        const uid = req.params.uid;
+        const orchid = await firestore.collection('orchids').doc(uid);
+        const data = await orchid.get();
+        if (!data.exists){
+            res.status(404).send('Orchid with the given ID not found');
+        }else{
+            res.send(data.data());
+        }
+    }
+    catch(error){
+        res.status(400).send(error.message);
+    }
+}
+
 module.exports = {
     addOrchid,
     getAllOrchids,
+<<<<<<< HEAD
     deleteOrchid,
     updateOrchid,
+=======
+>>>>>>> 37f955a3a3969e30cd35a2a499f6042392ac947b
     getOrchid
 }

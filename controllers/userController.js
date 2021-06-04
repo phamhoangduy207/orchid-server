@@ -2,33 +2,7 @@
 
 const admin = require('../db');
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
-
 const firestore = admin.firestore();
-
-const saltRounds = 10;
-
-const addUser = async (req, res) => {
-    await bcrypt.hash(req.body.user.password, saltRounds, (err, hash)=>{
-        try {  
-            const user = new User(
-                req.body.user.uid,
-                req.body.user.email,
-                hash,
-                req.body.user.name,
-                req.body.user.favourite
-            );
-            admin.auth().createUser(
-                user
-            )
-            res.json({message:'User Created'})
-        } 
-        catch(e){
-            console.log(e)
-            res.json({message:'Error creating user'})
-        }
-    })
-}
 
 const getUser = async (req, res) => {
     try{
@@ -45,6 +19,11 @@ const getUser = async (req, res) => {
         res.status(400).send(error.message);
     }
 }
+
+// const infoAI = async (req, res) => {
+//     console.log(result);
+//     //res.send(JSON.parse(result));
+// }
 
 const getAllUsers = async (req, res) => {
     try{
@@ -80,7 +59,6 @@ const deleteUser = async (req, res) => {
 const updateUser = async(req, res, next) => {
     try{
         const uid = req.params.uid;
-        //console.log(uid);
         const data = req.body;
         const user = await firestore.collection('users').doc(uid);
         await user.update(data);
@@ -91,32 +69,14 @@ const updateUser = async(req, res, next) => {
     }
 }
 
-const signIn = async (req, res) => {
-    try{
-        const user = await admin.auth().getUserByEmail(req.body.email)
-        //await admin.auth().
-        {
-            try{
-                    const token =await admin.auth().createCustomToken(req.body.email)
-                    res.json(token)
-                    
-                } 
-            catch(e){
-                console.log(e)
-                res.json({message:'Error Generating Token!Please try again'})
-            }
-        }
-    }
-    catch(e){
-        res.json({message:'No user record found'})
-    }
-}
-
 module.exports = {
+<<<<<<< HEAD
     addUser,
     getUser, 
+=======
+    getUser,
+>>>>>>> 37f955a3a3969e30cd35a2a499f6042392ac947b
     getAllUsers,
     deleteUser,
     updateUser,
-    signIn,
 }
