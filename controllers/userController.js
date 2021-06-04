@@ -114,7 +114,7 @@ const signIn = async (req, res) => {
 
 module.exports = {
     addUser,
-    getUser,
+    getUser, 
     getAllUsers,
     deleteUser,
     updateUser,
