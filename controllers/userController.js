@@ -70,12 +70,9 @@ const updateUser = async(req, res, next) => {
 }
 
 module.exports = {
-<<<<<<< HEAD
     addUser,
     getUser, 
-=======
     getUser,
->>>>>>> 37f955a3a3969e30cd35a2a499f6042392ac947b
     getAllUsers,
     deleteUser,
     updateUser,
