@@ -110,10 +110,7 @@ const getOrchid = async(req, res, next) => {
 module.exports = {
     addOrchid,
     getAllOrchids,
-<<<<<<< HEAD
     deleteOrchid,
     updateOrchid,
-=======
->>>>>>> 37f955a3a3969e30cd35a2a499f6042392ac947b
     getOrchid
 }
